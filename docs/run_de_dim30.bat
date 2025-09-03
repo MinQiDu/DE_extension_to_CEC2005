@@ -1,5 +1,5 @@
 @echo off
-cd /d "C:\Users\user\Documents\MyCode\VisualStudio\meta_algo\DE_extension\x64\Release"
+cd /d "C:\Users\user\Documents\MyCode\VisualStudio\meta_algo\DE_extension_to_CEC2005\x64\Release"
 
 :: 共用參數
 set dim=30
