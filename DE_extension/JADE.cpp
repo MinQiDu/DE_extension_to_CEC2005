@@ -143,6 +143,15 @@ void algo_JADE::Mutation()
 	vector<vector<double>> pop_A = pop;                         /* 先複製pop */
 	pop_A.insert(pop_A.end(), A.begin(), A.end());              /* 再接上A */
 
+	int p_num = p * pop_size;
+	if (p_num < 2) p_num = 2;                                   /* 確保至少有2個候選個體 */
+	vector<pair<double, int>> fit_idx(pop_size);                /* pair = { fitness, index } */
+	for (int i = 0; i < pop_size; ++i)                          /* 建立 fit_idx 以供排序列出個體 fitness 排名 */
+	{
+		fit_idx[i] = { fit[i], i };
+	}
+	sort(fit_idx.begin(), fit_idx.end());                       /* fitness 由小->大 */
+
 	for (int i = 0; i < pop_size; ++i)
 	{
 		/* 生成此代所有個體的 CR[i] & F[i] */
@@ -155,15 +164,6 @@ void algo_JADE::Mutation()
 
 		/* 選出x_pbest, x_r1, x_r2 來產生 donor_pop */
 		/* x_pbest */
-		int p_num = p * pop_size;
-		if (p_num < 2) p_num = 2;                                   /* 確保至少有2個候選個體 */
-		vector<pair<double, int>> fit_idx(pop_size);                /* pair = { fitness, index } */
-		for (int i = 0; i < pop_size; ++i)                          /* 建立 fit_idx 以供排序列出個體 fitness 排名 */
-		{
-			fit_idx[i] = { fit[i], i };
-		}
-		sort(fit_idx.begin(), fit_idx.end());                       /* fitness 由小->大 */
-
 		int idx_pbest;
 		do {
 			uniform_int_distribution<int> dist_pbest(0, p_num - 1); /* 整數均勻分布 for 生成index */
